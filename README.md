@@ -2,6 +2,10 @@
 
 Exemplo muito simples  de como fazer um chat com Firebase e Vanilla Javascript
 
+## Apresentação
+
+https://docs.google.com/presentation/d/175Xv0cJQVme1LnhqkpUWkvaS0Efouhxz49p8tlQJsho/edit#slide=id.p
+
 ## Instruções
 
 - abra o [site do Firebase](firebase.google.com)
