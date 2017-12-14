@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+
+  <body onload="load()">
+    <form onsubmit="return enviarMsg()">
+      <input type="text" name="" id="msg-input">
+      <button type="submit">enviar</button>
+    </form>
+
+    <ul id="lista-msg"></ul>
+  
+
+    <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "",
+        authDomain: "",
+        databaseURL: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: ""
+      };
+      firebase.initializeApp(config);
+
+      const db = firebase.database();
+      const msgRef = db.ref().child('messages');
+
+      console.log(msgRef);
+
+      function enviarMsg() {
+        msgRef.push({
+          "user_id": localStorage.getItem("user_id"),
+          "msg": document.querySelector('#msg-input').value
+        })
+
+        document.querySelector('#msg-input').value = ''
+
+        return false
+      }
+
+      function load() {
+        msgRef.on('value', snap => {
+          document.querySelectorAll("li").forEach(x => x.remove())
+          snap.forEach(function(snap) {
+            var li = document.createElement('LI')
+            var text = document.createTextNode(snap.val().user_id + ': ' + snap.val().msg)
+            li.appendChild(text);
+            document.querySelector("ul").appendChild(li);
+          });
+        })
+      }
+
+    </script>
+  </body>
+
+</html>
